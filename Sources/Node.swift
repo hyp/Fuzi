@@ -74,6 +74,8 @@ extension XMLNodeType {
     // The DOCB type is not part of the enum in libxml2, it's a #define. On 
     // Windows it gets imported as an incompatible type, so explicitly cast it.
     return xmlElementType(XML_DOCB_DOCUMENT_NODE) 
+    #elseif os(Android)
+    return xmlElementType(UInt32(XML_DOCB_DOCUMENT_NODE))
     #else
     return XML_DOCB_DOCUMENT_NODE
     #endif
