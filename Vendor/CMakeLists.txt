@@ -7,6 +7,7 @@ add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_WARNINGS)
 set(LIBXML2_WITH_ICONV OFF)
 set(LIBXML2_WITH_PYTHON OFF)
 set(BUILD_SHARED_LIBS OFF)
+set(LIBXML2_WITH_THREADS OFF)
 
 # Fetch and build libxml2.
 FetchContent_Declare(LibXml2
