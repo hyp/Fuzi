@@ -43,6 +43,7 @@ open class XMLDocument {
   /// The root element of the document.
   open fileprivate(set) var root: XMLElement?
   
+   #if !os(Android)
   // MARK: - Accessing & Setting Document Formatters
   /// The formatter used to determine `numberValue` for elements in the document. By default, this is an `NSNumberFormatter` instance with `NSNumberFormatterDecimalStyle`.
   open lazy var numberFormatter: NumberFormatter = {
@@ -50,6 +51,7 @@ open class XMLDocument {
     formatter.numberStyle = .decimal
     return formatter
   }()
+  #endif
   
   /// The formatter used to determine `dateValue` for elements in the document. By default, this is an `NSDateFormatter` instance configured to accept ISO 8601 formatted timestamps.
   open lazy var dateFormatter: DateFormatter = {
@@ -62,6 +64,7 @@ open class XMLDocument {
   // MARK: - Creating XML Documents
   fileprivate let cDocument: xmlDocPtr
   
+  #if !os(Android)
   /**
   Creates and returns an instance of XMLDocument from an XML string, throwing XMLError if an error occured while parsing the XML.
   
@@ -78,6 +81,7 @@ open class XMLDocument {
     }
     try self.init(cChars: cChars)
   }
+  #endif
   
   /**
   Creates and returns an instance of XMLDocument from XML data, throwing XMLError if an error occured while parsing the XML.

@@ -151,6 +151,7 @@ open class XMLElement: XMLNode {
     return stringValue.isEmpty
   }
   
+  #if !os(Android)
   /// A number representation of the element's value, which is generated from the document's `numberFormatter` property.
   open fileprivate(set) lazy var numberValue: NSNumber? = {
     return self.document.numberFormatter.number(from: self.stringValue)
@@ -160,6 +161,7 @@ open class XMLElement: XMLNode {
   open fileprivate(set) lazy var dateValue: Date? = {
     return self.document.dateFormatter.date(from: self.stringValue)
   }()
+  #endif
   
   /**
   Returns the child element at the specified index.

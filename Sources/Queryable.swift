@@ -303,6 +303,7 @@ extension XMLElement: Queryable {
   }
 }
 
+#if !os(Android)
 private class RegexConstants {
   static let idRegex = try! NSRegularExpression(pattern: "\\#([\\w-_]+)", options: [])
   
@@ -310,6 +311,7 @@ private class RegexConstants {
   
   static let attributeRegex = try! NSRegularExpression(pattern: "\\[([^\\[\\]]+)\\]", options: [])
 }
+#endif
 
 internal func XPath(fromCSS css: String) -> String {
   var xpathExpressions = [String]()
@@ -331,6 +333,7 @@ internal func XPath(fromCSS css: String) -> String {
         if let symbolRange = token.rangeOfCharacter(from: CharacterSet(charactersIn: "#.[]")) {
           let symbol = symbolRange.lowerBound == token.startIndex ?"*" :""
           var xpathComponent = String(token[..<symbolRange.lowerBound])
+#if !os(Android)
           let nsrange = NSRange(location: 0, length: token.utf16.count)
           
           if let result = RegexConstants.idRegex.firstMatch(in: token, options: [], range: nsrange), result.numberOfRanges > 1 {
@@ -344,6 +347,7 @@ internal func XPath(fromCSS css: String) -> String {
           for result in RegexConstants.attributeRegex.matches(in: token, options: [], range: nsrange) where result.numberOfRanges > 1 {
             xpathComponent += "[@\(token[result.range(at: 1)])]"
           }
+#endif
           
           token = xpathComponent
         }
